@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOV Shop</title>
+<style>
+:root{--red:#ed4037;--bg:#f6f7f9;--text:#242832;--muted:#7b8491;--card:#fff;--line:#dce1e7}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+body.dark{--bg:#17191f;--text:#f1f2f5;--card:#242832;--line:#3b414d;--muted:#aab1bd}
+button{font:inherit;cursor:pointer}.topbar{height:62px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.nav{max-width:1138px;height:100%;margin:auto;display:flex;align-items:center;gap:28px;padding:0 8px}
+.brand{font-size:20px;font-weight:800;color:var(--red);margin-right:auto}.nav a{color:var(--text);text-decoration:none;font-size:15px}.nav a:hover{color:var(--red)}
+.nav-actions{display:flex;align-items:center;gap:12px}.small-btn,.user-btn{border:1px solid var(--line);background:#f1f3f5;color:#252a32;border-radius:6px;padding:10px 14px;font-weight:600;font-size:13px}.coin{background:var(--red);color:white;border:0;border-radius:22px;padding:10px 17px;font-weight:700}
+main{max-width:1138px;margin:15px auto 0;padding:0 8px}.hero-layout{display:grid;grid-template-columns:minmax(0,1fr) 295px;gap:15px}
+.hero{min-height:367px;border-radius:9px;background:linear-gradient(155deg,#a63220 0%,#74300f 58%,#55240c 100%);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff}
+.hero h1{font-size:44px;margin:0 0 26px;font-weight:800;text-shadow:0 2px 2px #50200d}.hero p{font-size:19px;margin:0 0 32px}.primary{background:var(--red);color:#fff;border:0;border-radius:6px;padding:15px 37px;font-size:16px;font-weight:700}.primary:hover{background:#d9332b}
+.rank{border:1px solid var(--line);border-radius:9px;background:var(--card);overflow:hidden}.rank-title{background:var(--red);color:white;text-align:center;padding:14px;font-size:14px;font-weight:800;letter-spacing:.4px}
+.tabs{display:flex;border-bottom:1px solid var(--line)}.tabs button{flex:1;border:0;background:transparent;padding:10px 4px;color:var(--muted);font-weight:600;font-size:13px}.tabs button.active{color:var(--red);border-bottom:2px solid var(--red)}
+.rank-row{display:flex;align-items:center;gap:10px;padding:12px 14px;font-size:13px}.rank-row:nth-child(even){background:rgba(130,130,130,.045)}.medal{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;color:white;font-weight:800;background:#aeb4ba;flex-shrink:0}.rank-row:nth-child(3) .medal{background:#ffc928}.rank-row:nth-child(4) .medal{background:#bd7136}.rank-info{flex:1}.rank-info b{display:block}.rank-info small{display:block;color:var(--muted);margin-top:4px}.money{color:var(--red);font-weight:700;white-space:nowrap}
+.ticker{margin-top:14px;background:#f8eeee;border-top:1px solid #f0dddd;border-bottom:1px solid #f0dddd;overflow:hidden;white-space:nowrap;padding:12px 0;color:#777;font-size:13px}.ticker-track{display:inline-block;min-width:100%;animation:scroll 30s linear infinite}.ticker b{color:#333}.ticker span{margin:0 15px}@keyframes scroll{to{transform:translateX(-50%)}}
+.section{padding:18px 0 50px}.section h2{text-align:center;color:var(--red);font-size:23px;margin:0 0 12px}.underline{width:55px;height:3px;background:var(--red);margin:0 auto 29px;border-radius:3px}
+.category-wrap{display:flex;align-items:center;gap:18px}.circle{width:41px;height:41px;border:1px solid var(--line);border-radius:50%;background:var(--card);box-shadow:0 2px 7px #00000012;font-size:22px;flex-shrink:0}.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1}
+.category{height:185px;border-radius:13px;overflow:hidden;position:relative;background:#24232b;color:white;display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;cursor:pointer;border:0}
+.category img{position:absolute;width:100%;height:100%;object-fit:cover;filter:brightness(.42)}.category .cat-content{position:relative;z-index:1}.category h3{font-size:21px;margin:0 0 14px}.category p{margin:0;font-weight:600}
+.category:hover{transform:translateY(-3px);transition:.2s}.products{margin-top:35px}.products h2{margin-bottom:22px}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.product{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}.product img{width:100%;height:150px;object-fit:cover;background:#24232b}.product-body{padding:14px}.product-body h3{font-size:16px;margin:0 0 8px}.product-body p{color:var(--muted);font-size:13px;margin:0 0 12px}.price{color:var(--red);font-weight:800}.product-body button{float:right;border:0;background:var(--red);color:white;padding:8px 12px;border-radius:5px}
+.chat{position:fixed;right:22px;bottom:17px;width:56px;height:56px;border-radius:50%;border:0;background:var(--red);color:white;font-size:23px;box-shadow:0 4px 12px #0002}
+.modal-backdrop{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:30;padding:15px}.modal{width:min(430px,100%);background:var(--card);border-radius:12px;padding:22px;box-shadow:0 10px 35px #0003}.modal h3{margin:0 0 12px}.modal p{color:var(--muted);line-height:1.5}.modal input{width:100%;padding:11px;border:1px solid var(--line);border-radius:6px;margin:7px 0 14px;background:var(--bg);color:var(--text)}.modal-actions{display:flex;justify-content:flex-end;gap:8px}.secondary{padding:10px 15px;border:1px solid var(--line);background:transparent;color:var(--text);border-radius:6px}
+.toast{position:fixed;left:50%;bottom:25px;transform:translateX(-50%);background:#222;color:#fff;padding:11px 17px;border-radius:7px;display:none;z-index:50;font-size:14px}
+@media(max-width:800px){.nav{gap:13px}.nav a{display:none}.hero-layout{grid-template-columns:1fr}.rank{display:none}.hero{min-height:300px}.categories{grid-template-columns:1fr;}.category{height:160px}.category-wrap{gap:8px}.circle{width:32px;height:32px}.product-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.nav{padding:0 12px}.brand{font-size:18px}.nav-actions{gap:6px}.small-btn,.user-btn{padding:9px 8px;font-size:11px}.coin{padding:9px 11px}.hero h1{font-size:35px}.hero p{font-size:16px}.product-grid{grid-template-columns:1fr}.category h3{font-size:18px}}
+</style>
+</head>
+<body>
+<header class="topbar"><nav class="nav">
+<div class="brand">AOV Shop</div><a href="#">Trang chủ</a><a href="#categories">Danh mục⌄</a><a href="#products">Sản phẩm</a>
+<div class="nav-actions"><button class="small-btn" id="theme" title="Đổi giao diện">☾</button><button class="coin" id="wallet">0 đ</button><button class="small-btn" id="cart">Giỏ hàng (<span id="cart-count">0</span>)</button><button class="user-btn" id="account">Vũ Trường Giang ▾</button></div>
+</nav></header>
+<main>
+<div class="hero-layout">
+<section class="hero"><div><h1>AOV Shop</h1><p>Shop acc 24/7</p><button class="primary" onclick="document.querySelector('#categories').scrollIntoView()">Khám phá ngay</button></div></section>
+<aside class="rank"><div class="rank-title">TOP NẠP</div><div class="tabs"><button class="active" data-tab="all">Tổng</button><button data-tab="month">Tháng</button><button data-tab="week">Tuần</button></div><div id="rank-list"></div></aside>
+</div></main>
+<div class="ticker"><div class="ticker-track"><span><b>a***</b> vừa mua <b>ACC 63-68 giấy tuyệt sắc</b>　 • </span><span><b>a***</b> vừa mua <b>ACC 63-68 giấy tuyệt sắc</b>　 • </span><span><b>a***</b> vừa mua <b>ACC 63-68 giấy tuyệt sắc</b>　 • </span><span><b>T***</b> vừa mua <b>Clone Mxt Lv12</b>　 • </span><span><b>a***</b> vừa mua <b>ACC 63-68 giấy tuyệt sắc</b>　 • </span><span><b>a***</b> vừa mua <b>ACC 63-68 giấy tuyệt sắc</b>　 • </span></div></div>
+<main class="section" id="categories"><h2>Danh mục sản phẩm</h2><div class="underline"></div>
+<div class="category-wrap"><button class="circle" id="prev">‹</button><div class="categories" id="category-list">
+<button class="category" data-category="Acc Giấy tuyệt sắc"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt=""><div class="cat-content"><h3>Acc Giấy tuyệt sắc</h3><p>2 sản phẩm</p></div></button>
+<button class="category" data-category="ACC 110 QUÂN HUY"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt=""><div class="cat-content"><h3>ACC 110 QUÂN HUY</h3><p>0 sản phẩm</p></div></button>
+<button class="category" data-category="CLONE MXT"><div class="cat-content"><h3>CLONE MXT</h3><p>2 sản phẩm</p></div></button>
+</div><button class="circle" id="next">›</button></div>
+<section class="products" id="products"><h2>Sản phẩm nổi bật</h2><div class="product-grid" id="product-grid"></div></section>
+</main>
+<button class="chat" id="chat" title="Liên hệ">●</button>
+<div class="modal-backdrop" id="modal-bg"><div class="modal"><h3 id="modal-title">Thông báo</h3><div id="modal-content"></div><div class="modal-actions"><button class="secondary" id="close">Đóng</button><button class="primary" id="confirm">Xác nhận</button></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const ranks={
+ all:[['ac***','6 lần','1.027.000 đ'],['Vũ***','5 lần','680.000 đ'],['sa***','1 lần','200.000 đ'],['Hà***','6 lần','193.000 đ'],['rg***','2 lần','169.000 đ']],
+ month:[['Vũ***','5 lần','680.000 đ'],['ac***','4 lần','520.000 đ'],['Hà***','3 lần','193.000 đ'],['sa***','1 lần','120.000 đ'],['rg***','1 lần','99.000 đ']],
+ week:[['ac***','2 lần','320.000 đ'],['Vũ***','2 lần','280.000 đ'],['Hà***','1 lần','93.000 đ'],['sa***','1 lần','80.000 đ'],['rg***','1 lần','49.000 đ']]
+};
+function renderRanks(tab='all'){document.querySelector('#rank-list').innerHTML=ranks[tab].map((r,i)=>`<div class="rank-row"><div class="medal">${i+1}</div><div class="rank-info"><b>${r[0]}</b><small>${r[1]}</small></div><div class="money">${r[2]}</div></div>`).join('')}
+renderRanks();
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderRanks(b.dataset.tab)});
+const products=[
+{name:'ACC Giấy tuyệt sắc #01',desc:'Tài khoản Liên Quân Mobile • Danh mục giấy tuyệt sắc',price:'150.000 đ',cat:'Acc Giấy tuyệt sắc'},
+{name:'ACC Giấy tuyệt sắc #02',desc:'Tài khoản Liên Quân Mobile • Nhiều trang phục',price:'220.000 đ',cat:'Acc Giấy tuyệt sắc'},
+{name:'Clone MXT Lv12 #01',desc:'Tài khoản clone • Cấp độ 12',price:'35.000 đ',cat:'CLONE MXT'},
+{name:'Clone MXT Lv12 #02',desc:'Tài khoản clone • Cấp độ 12',price:'50.000 đ',cat:'CLONE MXT'}
+];
+let cart=[];
+function renderProducts(filter=''){const list=products.filter(p=>!filter||p.cat===filter);document.querySelector('#product-grid').innerHTML=list.length?list.map((p,i)=>`<article class="product"><img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=700" alt="Ảnh sản phẩm"><div class="product-body"><h3>${p.name}</h3><p>${p.desc}</p><span class="price">${p.price}</span><button onclick="addCart('${p.name}')">Thêm</button></div></article>`).join(''):'<p>Danh mục hiện chưa có sản phẩm.</p>'}
+renderProducts();
+function addCart(name){cart.push(name);document.querySelector('#cart-count').textContent=cart.length;toast('Đã thêm sản phẩm vào giỏ hàng')}
+document.querySelectorAll('.category').forEach(c=>c.onclick=()=>{renderProducts(c.dataset.category);document.querySelector('#products').scrollIntoView()});
+document.querySelector('#theme').onclick=()=>document.body.classList.toggle('dark');
+function toast(t){let e=document.querySelector('#toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2300)}
+const bg=document.querySelector('#modal-bg'),title=document.querySelector('#modal-title'),content=document.querySelector('#modal-content'),confirm=document.querySelector('#confirm');
+function showModal(t,c,action){title.textContent=t;content.innerHTML=c;bg.style.display='flex';confirm.onclick=()=>{if(action)action();bg.style.display='none'}}
+document.querySelector('#close').onclick=()=>bg.style.display='none';bg.onclick=e=>{if(e.target===bg)bg.style.display='none'};
+document.querySelector('#cart').onclick=()=>showModal('Giỏ hàng',cart.length?'<ul>'+cart.map(x=>`<li>${x}</li>`).join('')+'</ul>':'<p>Giỏ hàng của bạn đang trống.</p>',null);
+document.querySelector('#wallet').onclick=()=>showModal('Ví của bạn','<p>Số dư hiện tại: <b>0 đ</b></p><p>Đây là giao diện minh họa. Chức năng nạp tiền cần kết nối máy chủ và cổng thanh toán.</p>',null);
+document.querySelector('#account').onclick=()=>showModal('Tài khoản','<p>Xin chào, Vũ Trường Giang!</p><p>Bản mẫu giao diện chưa kết nối đăng nhập thật.</p>',null);
+document.querySelector('#chat').onclick=()=>showModal('Liên hệ hỗ trợ','<p>Thêm liên kết Zalo/Facebook của shop tại phần cấu hình trong mã nguồn để khách hàng liên hệ.</p>',null);
+document.querySelector('#prev').onclick=()=>toast('Đang ở đầu danh mục');document.querySelector('#next').onclick=()=>toast('Đã hiển thị tất cả danh mục');
+</script>
+</body></html>
